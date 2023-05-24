@@ -19,7 +19,7 @@ import static java.lang.System.getenv;
  * 2023/05/24         gim-yeong-geun          최초 생성
  */
 public class NUserDao extends UserDao{
-    @Override
+//    @Override
     public Connection getConnection() throws ClassNotFoundException, SQLException {
 
         Map<String, String> env = getenv();
