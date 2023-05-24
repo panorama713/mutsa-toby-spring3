@@ -18,12 +18,15 @@ import static java.lang.System.getenv;
  * -----------------------------------------------------------
  * 2023/05/23         gim-yeong-geun          최초 생성
  */
-public  class UserDao {
+public class UserDao {
+    ConnectionMaker connectionMaker;
 
-    SimpleConnectionMaker connectionMaker = new SimpleConnectionMaker();
+    public UserDao() {
+        this.connectionMaker = new DConnectionMaker();
+    }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection conn = connectionMaker.makeNewConnection();
+        Connection conn = connectionMaker.makeConnection();
         PreparedStatement pstmt = conn.prepareStatement("insert into user(id, name, password) values(?, ?, ?)");
         pstmt.setString(1, user.getId());
         pstmt.setString(2, user.getName());
@@ -67,12 +70,12 @@ public  class UserDao {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         UserDao userDao = new UserDao();
         User user = new User();
-        user.setId("12");
+        user.setId("14");
         user.setName("kyeongrok");
         user.setPassword("1234");
         userDao.add(user);
 
-        User selectedUser = userDao.get("12");
+        User selectedUser = userDao.get("14");
         System.out.println(selectedUser.getId());
         System.out.println(selectedUser.getName());
         System.out.println(selectedUser.getPassword());
