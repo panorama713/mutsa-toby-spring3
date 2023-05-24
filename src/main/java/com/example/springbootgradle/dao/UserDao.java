@@ -18,19 +18,10 @@ import static java.lang.System.getenv;
  * -----------------------------------------------------------
  * 2023/05/23         gim-yeong-geun          최초 생성
  */
-public class UserDao {
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
-        Map<String, String> env = getenv();
-        String dbHost = env.get("DB_HOST"); //DB_HOST=jdbc:mysql://localhost:3306/spring-db
-        String dbUser = env.get("DB_USER");
-        String dbPassword = env.get("DB_PASSWORD");
+public abstract class UserDao {
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(
-                dbHost, dbUser, dbPassword
-        );
-        return conn;
-    }
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+
     public void add(User user) throws ClassNotFoundException, SQLException {
         Connection conn = getConnection();
         PreparedStatement pstmt = conn.prepareStatement("insert into user(id, name, password) values(?, ?, ?)");
@@ -74,7 +65,7 @@ public class UserDao {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao userDao = new UserDao();
+        UserDao userDao = new NUserDao();
 //        User user = new User();
 //        user.setId("212");
 //        user.setName("kyeongrok");
